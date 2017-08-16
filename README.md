@@ -1,6 +1,6 @@
 # MEAN-stackDocker
 
-00-init.sh
+./00-init.sh
 
 eval $(docker-machine env swarm-1)
 
