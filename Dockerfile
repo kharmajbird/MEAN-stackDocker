@@ -12,4 +12,5 @@ RUN npm install
 RUN npm install -g bower
 RUN bower install --allow-root
 
-CMD node ./server.js
+#CMD node ./server.js
+CMD [ "node", "server.js" ]
