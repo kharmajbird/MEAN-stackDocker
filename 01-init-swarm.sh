@@ -2,12 +2,15 @@
 
 ./dm-swarm.sh
 
-echo; echo; echo
-echo "docker-machine ssh swarm-1"
-echo "docker network create --driver overlay proxy"
+docker-machine ssh swarm-1 \
+    docker network create --driver overlay proxy
 
-echo "curl -o docker-compose-stack.yml https://raw.githubusercontent.com/vfarcic/docker-flow-proxy/master/docker-compose-stack.yml"
-echo "curl -o docker-compose-mean-demo.yml https://raw.githubusercontent.com/kharmajbird/MEAN-stackDocker/master/docker-compose-mean-demo.yml"
+docker-machine ssh swarm-1 \
+    curl -o docker-compose-stack.yml https://raw.githubusercontent.com/vfarcic/docker-flow-proxy/master/docker-compose-stack.yml
+docker-machine ssh swarm-1 \
+    curl -o docker-compose-mean-demo.yml https://raw.githubusercontent.com/kharmajbird/MEAN-stackDocker/master/docker-compose-mean-demo.yml
 
-echo "docker stack deploy -c docker-compose-stack.yml proxy"
-echo "docker stack deploy -c docker-compose-mean-demo.yml meany"
+docker-machine ssh swarm-1 \
+    docker stack deploy -c docker-compose-stack.yml proxy
+docker-machine ssh swarm-1 \
+    docker stack deploy -c docker-compose-mean-demo.yml meany
