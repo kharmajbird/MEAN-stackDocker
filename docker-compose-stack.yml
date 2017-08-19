@@ -28,6 +28,50 @@ services:
       placement:
         constraints: [node.role == manager]
 
+  elasticsearch:
+    image: elasticsearch:2.4
+    ports:
+      - 9200:9200
+    networks:
+      - elk
+
+  logstash:
+    image: logstash:2.4
+    networks:
+      - elk
+    environment:
+      - LOGSPOUT=ignore
+    volumes:
+      - /tmp/docker/logstash:/conf
+    command: 'logstash -f /conf/logstash'
+
+  kibana:
+    image: kibana:4.6
+    networks:
+      - proxy
+      - elk
+    environment:
+      - ELASTICSEARCH_URL=http://elasticsearch:9200
+    labels:
+     - "com.df.notify=true"
+     - "com.df.distribute=true"
+     - "com.df.servicePath=/app/kibana,/bundles,/elasticsearch"
+     - "com.df.port=5601"
+
+  logspout:
+    image: gliderlabs/logspout
+    ports:
+      - 51415:51415
+    networks:
+      - elk
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+    environment:
+      - SYSLOG_FORMAT=rfc3164
+    command: 'syslog://logstash:51415'
+
 networks:
   proxy:
+    external: true
+  elk:
     external: true
