@@ -23,5 +23,5 @@ docker-machine ssh swarm-1 \
 
 docker-machine ssh swarm-1 \
     docker stack deploy -c docker-compose-stack.yml proxy
-##docker-machine ssh swarm-1 \
-##    docker stack deploy -c docker-compose-mean-demo.yml meany
+docker-machine ssh swarm-1 \
+    docker stack deploy -c docker-compose-mean-demo.yml meany
