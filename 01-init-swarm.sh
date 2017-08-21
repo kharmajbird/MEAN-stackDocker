@@ -2,14 +2,23 @@
 
 ./dm-swarm.sh
 
-mkdir -p /tmp/docker/logstash
+mkdir -p ./docker/logstash
 
-cat << EOF > /tmp/docker/logstash/logstash.conf
+cat << EOF > ./docker/logstash/logstash.conf
 input {
   syslog { port => 51415 }
 }
-EOF
 
+output {
+  elasticsearch {
+    hosts => ["elasticsearch:9200"]
+  }
+  # Remove in production
+  stdout {
+    codec => rubydebug
+  }
+}
+EOF
 
 docker-machine ssh swarm-1 \
     docker network create --driver overlay proxy

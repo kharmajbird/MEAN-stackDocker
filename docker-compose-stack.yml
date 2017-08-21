@@ -42,8 +42,8 @@ services:
     environment:
       - LOGSPOUT=ignore
     volumes:
-      - /tmp/docker/logstash:/conf
-    command: 'logstash -f /conf/logstash'
+      - "./docker/logstash:/conf"
+    command: 'logstash -f /conf/logstash.conf'
 
   kibana:
     image: kibana:4.6
@@ -75,3 +75,11 @@ networks:
     external: true
   elk:
     external: true
+
+volumes:
+  logstash:
+    driver: local
+    driver_opts:
+      o: bind
+      type: none
+      device: /conf
