@@ -1,3 +1,5 @@
+NODES=7
+
 all:
 	./00-build.sh && \
 	./01-init-swarm.sh
@@ -15,4 +17,4 @@ wait:
 	./02-wait-for-service.sh logstash 1 1
 
 clean:
-	for i in 1 2 3; do docker-machine rm -f swarm-$${i}; done
+	for i in $${NODES}; do docker-machine rm -f swarm-$${i}; done
