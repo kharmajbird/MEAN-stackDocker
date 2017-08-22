@@ -5,5 +5,14 @@ all:
 swarm:  clean
 	./01-init-swarm.sh
 
+wait:
+	./02-wait-for-service.sh swarm-listener 1 1
+	./02-wait-for-service.sh proxy_proxy 2 2
+	./02-wait-for-service.sh meany_main 3 3
+	./02-wait-for-service.sh meany_db 1 1
+	./02-wait-for-service.sh elasticsearch 1 1
+	./02-wait-for-service.sh kibana 1 1
+	./02-wait-for-service.sh logstash 1 1
+
 clean:
 	for i in 1 2 3; do docker-machine rm -f swarm-$${i}; done
