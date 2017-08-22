@@ -13,7 +13,7 @@ services:
     image: logstash:2.4
     networks:
       - elk
-      -proxy
+      - proxy
     environment:
       - LOGSPOUT=ignore
     volumes:
