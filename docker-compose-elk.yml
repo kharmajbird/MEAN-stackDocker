@@ -17,7 +17,7 @@ services:
     environment:
       - LOGSPOUT=ignore
     volumes:
-      - /tmp/docker/logstash:/conf"
+      - /tmp/docker/logstash:/conf
     command: 'logstash -f /conf/logstash.conf'
 
   kibana:
