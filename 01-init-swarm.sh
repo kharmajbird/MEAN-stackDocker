@@ -38,3 +38,10 @@ docker-machine ssh swarm-1 \
     docker stack deploy -c docker-compose-mean-demo.yml meany
 docker-machine ssh swarm-1 \
     docker stack deploy -c docker-compose-elk.yml elk
+
+./02-wait-for-service proxy_proxy 2
+./02-wait-for-service meany_main 3
+./02-wait-for-service meany_db 1
+./02-wait-for-service elasticsearch 1
+./02-wait-for-service kibana 1
+./02-wait-for-service logstash 1
