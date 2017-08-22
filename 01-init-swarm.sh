@@ -2,9 +2,9 @@
 
 ./dm-swarm.sh
 
-mkdir -p ./docker/logstash
+mkdir -p /tmp/docker/logstash
 
-cat << EOF > ./docker/logstash/logstash.conf
+cat << EOF > /tmp/docker/logstash/logstash.conf
 input {
   syslog { port => 51415 }
 }
