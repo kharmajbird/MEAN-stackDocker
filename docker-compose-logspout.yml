@@ -1,0 +1,19 @@
+version: "3"
+
+services:
+
+  logspout:
+    image: gliderlabs/logspout
+    ports:
+      - 51415:51415
+    networks:
+      - elk
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+    environment:
+      - SYSLOG_FORMAT=rfc3164
+    command: 'syslog://logstash:51415'
+
+networks:
+  elk:
+    external: true
