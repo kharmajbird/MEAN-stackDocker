@@ -10,7 +10,7 @@ services:
       - elk
 
   logstash:
-    image: logstash:2.4
+    image: kharmajbird/logstash:2.4
     secrets:
       - logstash_conf
     networks:
@@ -18,9 +18,7 @@ services:
       - elk
     environment:
       - LOGSPOUT=ignore
-#    volumes:
-#      - /tmp/docker/logstash:/conf
-    command: 'logstash -f /run/secrets/logstash.conf'
+    command: 'logstash -f /conf/logstash.conf'
 
   kibana:
     image: kibana:4.6
@@ -35,32 +33,8 @@ services:
      - "com.df.servicePath=/app/kibana,/bundles,/elasticsearch"
      - "com.df.port=5601"
 
-#  logspout:
-#    image: gliderlabs/logspout
-#    ports:
-##      - 51415:51415
-#    networks:
-#      - elk
-#    volumes:
-#      - /var/run/docker.sock:/var/run/docker.sock
-#    environment:
-#      - SYSLOG_FORMAT=rfc3164
-#    command: 'syslog://logstash:51415'
-
 networks:
   proxy:
     external: true
   elk:
     external: true
-
-#volumes:
-#  logstash:
-#    driver: local
-#    driver_opts:
-#      o: bind
-#      type: none
-#      device: /conf
-
-secrets:
-  logstash_conf:
-    file: ./docker/logstash/logstash.conf
