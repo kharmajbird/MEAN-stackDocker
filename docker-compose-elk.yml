@@ -11,8 +11,6 @@ services:
 
   logstash:
     image: kharmajbird/logstash:2.4
-    secrets:
-      - logstash_conf
     networks:
       - proxy
       - elk
