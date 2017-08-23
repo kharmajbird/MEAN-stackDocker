@@ -9,6 +9,7 @@ services:
     networks:
       - proxy
       - default
+      - elk
     deploy:
       replicas: 3
       update_config:
@@ -29,4 +30,6 @@ networks:
   default:
     external: false
   proxy:
+    external: true
+  elk:
     external: true
