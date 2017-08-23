@@ -2,10 +2,11 @@ NODES="1 2 3 4 5 6 7"
 
 all:
 	./00-build.sh && \
-	./01-init-swarm.sh
+	swarm
 
 swarm:  clean
 	./01-init-swarm.sh
+	wait
 
 wait:
 	eval $(docker-machine env swarm-1)
