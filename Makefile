@@ -1,4 +1,4 @@
-NODES=7
+NODES="1 2 3 4 5 6 7"
 
 all:
 	./00-build.sh && \
@@ -8,6 +8,8 @@ swarm:  clean
 	./01-init-swarm.sh
 
 wait:
+	eval $(docker-machine env swarm-1)
+
 	./02-wait-for-service.sh swarm-listener 1 1
 	./02-wait-for-service.sh proxy_proxy 2 2
 	./02-wait-for-service.sh meany_main 3 3
