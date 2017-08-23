@@ -21,4 +21,11 @@ wait:
 	./02-wait-for-service.sh logspout 1 1
 
 clean:
-	for i in $(NODES); do docker-machine rm -f swarm-$${i}; done
+	# FIXME:  for i in $(NODES); do docker-machine rm -f swarm-$${i}; done
+	docker-machine rm -f swarm-1
+	docker-machine rm -f swarm-2
+	docker-machine rm -f swarm-3
+	docker-machine rm -f swarm-4
+	docker-machine rm -f swarm-5
+	docker-machine rm -f swarm-6
+	docker-machine rm -f swarm-7
