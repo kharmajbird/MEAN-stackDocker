@@ -18,6 +18,7 @@ wait:
 	./02-wait-for-service.sh elasticsearch 1 1
 	./02-wait-for-service.sh kibana 1 1
 	./02-wait-for-service.sh logstash 1 1
+	./02-wait-for-service.sh logspout 1 1
 
 clean:
 	for i in $(NODES); do docker-machine rm -f swarm-$${i}; done
