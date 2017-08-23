@@ -16,7 +16,7 @@ services:
       - elk
     environment:
       - LOGSPOUT=ignore
-    command: 'logstash -f /conf/logstash.conf'
+##    command: 'logstash -f /conf/logstash.conf'
 
   kibana:
     image: kibana:4.6
