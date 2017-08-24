@@ -10,13 +10,12 @@ services:
       - elk
 
   logstash:
-    image: kharmajbird/logstash:2.4
+    image: kharmajbird/logstash
     networks:
       - proxy
       - elk
     environment:
       - LOGSPOUT=ignore
-##    command: 'logstash -f /conf/logstash.conf'
 
   kibana:
     image: kibana:4.6

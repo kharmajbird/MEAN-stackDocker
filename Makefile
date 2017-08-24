@@ -1,12 +1,13 @@
 NODES="1 2 3 4 5 6 7"
+LEADER_IP=`docker-machine ip swarm-1`
 
 all:
 	./00-build.sh && \
-	swarm
+	make swarm
 
 swarm:  clean
 	./01-init-swarm.sh
-	wait
+	make wait
 
 wait:
 	eval $(docker-machine env swarm-1)
@@ -15,7 +16,7 @@ wait:
 	./02-wait-for-service.sh proxy_proxy 2 2
 	./02-wait-for-service.sh meany_main 3 3
 	./02-wait-for-service.sh meany_db 1 1
-	open "http://$(docker-machine ip swarm-1)"
+	open http://$(LEADER_IP)
 	./02-wait-for-service.sh elasticsearch 1 1
 	./02-wait-for-service.sh kibana 1 1
 	./02-wait-for-service.sh logstash 1 1
