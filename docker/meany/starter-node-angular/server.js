@@ -7,7 +7,7 @@ var methodOverride = require('method-override');
 
 // configuration ===========================================
 
-var Syslog = require('node-syslog');
+var Syslog = require('modern-syslog');
 
 // config files
 var db = require('./config/db');
