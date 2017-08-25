@@ -1,10 +1,7 @@
-#docker run -p 8080:8080 -t meany
-
 FROM node
 MAINTAINER <jaynetorg@yahoo.com>
 
-WORKDIR /
-RUN git clone https://github.com/scotch-io/starter-node-angular.git
+ADD starter-node-angular/ /starter-node-angular
 
 WORKDIR /starter-node-angular
 
