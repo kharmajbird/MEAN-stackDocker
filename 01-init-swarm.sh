@@ -9,16 +9,16 @@ docker-machine ssh swarm-1 \
 
 
 docker-machine ssh swarm-1 \
-    curl -o docker-compose-proxy.yml https://raw.githubusercontent.com/kharmajbird/MEAN-stackDocker/master/docker-compose-proxy.yml
+    curl -o docker-compose-proxy.yml https://raw.githubusercontent.com/kharmajbird/MEAN-stackDocker/master/stack/docker-compose-proxy.yml
 
 docker-machine ssh swarm-1 \
-    curl -o docker-compose-elk.yml https://raw.githubusercontent.com/kharmajbird/MEAN-stackDocker/master/docker-compose-elk.yml
+    curl -o docker-compose-elk.yml https://raw.githubusercontent.com/kharmajbird/MEAN-stackDocker/master/stack/docker-compose-elk.yml
 
 docker-machine ssh swarm-1 \
-    curl -o docker-compose-mean-demo.yml https://raw.githubusercontent.com/kharmajbird/MEAN-stackDocker/master/docker-compose-mean-demo.yml
+    curl -o docker-compose-mean-demo.yml https://raw.githubusercontent.com/kharmajbird/MEAN-stackDocker/master/stack/docker-compose-mean-demo.yml
 
 docker-machine ssh swarm-1 \
-    curl -o docker-compose-logspout.yml https://raw.githubusercontent.com/kharmajbird/MEAN-stackDocker/master/docker-compose-logspout.yml
+    curl -o docker-compose-logspout.yml https://raw.githubusercontent.com/kharmajbird/MEAN-stackDocker/master/stack/docker-compose-logspout.yml
 
 
 docker-machine ssh swarm-1 \
