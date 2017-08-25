@@ -22,13 +22,13 @@ docker-machine ssh swarm-1 \
 
 
 docker-machine ssh swarm-1 \
-    docker stack deploy -c stack/docker-compose-proxy.yml proxy
+    docker stack deploy -c docker-compose-proxy.yml proxy
 
 docker-machine ssh swarm-1 \
-    docker stack deploy -c stack/docker-compose-mean-demo.yml meany
+    docker stack deploy -c docker-compose-mean-demo.yml meany
 
 docker-machine ssh swarm-1 \
-    docker stack deploy -c stack/docker-compose-elk.yml elk
+    docker stack deploy -c docker-compose-elk.yml elk
 
 docker-machine ssh swarm-1 \
-    docker stack deploy -c stack/docker-compose-logspout.yml logspout
+    docker stack deploy -c docker-compose-logspout.yml logspout
