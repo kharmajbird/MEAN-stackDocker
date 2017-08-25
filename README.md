@@ -1,11 +1,8 @@
 # MEAN-stackDocker
 
-# 2 docker stacks of 2 services spread over 3 nodes
+make
+
+# after a "make clean" where docker swarm nodes are removed, 
+# open a new terminal for all other swarm operations, then run
 #
-
-./00-build.sh
-./01-init-swarm.sh
-
-eval $(docker-machine env swarm-1)
-
-open "http://$(docker-machine ip swarm-1)"
+#   eval $(docker-machine env swarm-1)
