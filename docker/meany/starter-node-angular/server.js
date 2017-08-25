@@ -26,7 +26,7 @@ app.use(express.static(__dirname + '/public')); // set the static files location
 // routes ==================================================
 require('./app/routes')(app); // pass our application into our routes
 
-Syslog.init("node-syslog", Syslog.LOG_PID | Syslog.LOG_ODELAY, Syslog.LOG_LOCAL0);
+Syslog.init("modern-syslog", Syslog.LOG_PID | Syslog.LOG_ODELAY, Syslog.LOG_LOCAL0);
 Syslog.log(Syslog.LOG_INFO, "Magic Johnson happens on port " + port + new Date());
 Syslog.close();
 
