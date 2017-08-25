@@ -3,10 +3,10 @@
 ./dm-swarm.sh
 
 docker-machine ssh swarm-1 \
-
     docker network create --driver overlay proxy
 docker-machine ssh swarm-1 \
     docker network create --driver overlay elk
+
 
 docker-machine ssh swarm-1 \
     curl -o docker-compose-proxy.yml https://raw.githubusercontent.com/kharmajbird/MEAN-stackDocker/master/docker-compose-proxy.yml
