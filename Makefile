@@ -1,13 +1,16 @@
 NODES="1 2 3 4 5 6 7"
 LEADER_IP=`docker-machine ip swarm-1`
 
-all:
-	./00-build.sh && \
-	make swarm
+all: build swarm
 
-swarm:  clean
+build:
+	./00-build.sh
+
+swarm:  clean init-swarm wait
+
+init-swarm:
 	./01-init-swarm.sh
-	make wait
+
 
 wait:
 	eval $(docker-machine env swarm-1)
@@ -22,6 +25,17 @@ wait:
 	./02-wait-for-service.sh logstash 1 1
 	open http://$(LEADER_IP):5601
 	./02-wait-for-service.sh logspout 1 1
+
+redeploy:
+	eval $(docker-machine env swarm-1) && \
+	docker stack rm meany && \
+	docker stack deploy -c stack/docker-compose-mean-demo.yml meany && \
+	make wait
+
+redeploy-elk:
+	docker stack rm elk && \
+	docker stack deploy -c stack/docker-compose-elk.yml elk && \
+	make wait
 
 clean:
 	# FIXME:  for i in $(NODES); do docker-machine rm -f swarm-$${i}; done

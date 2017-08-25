@@ -27,10 +27,14 @@ app.use(express.static(__dirname + '/public')); // set the static files location
 require('./app/routes')(app); // pass our application into our routes
 
 Syslog.init("modern-syslog", Syslog.LOG_PID | Syslog.LOG_ODELAY, Syslog.LOG_LOCAL0);
-Syslog.log(Syslog.LOG_INFO, "Magic Johnson happens on port " + port + new Date());
+Syslog.log(Syslog.LOG_ERR, "Magic Johnson happens on port " + port + " and port 32... 10 more and you will have the secret to the universe.  " + new Date());
 Syslog.close();
 
 // start app ===============================================
 app.listen(port);	
-console.log('PASS');
+
+
+console.log("console Magic Johnson happens on port " + port + " and port 32... 10 more and you will have the secret to the universe.  " + new Date());
+console.log("TEST");
+
 exports = module.exports = app; 						// expose app
