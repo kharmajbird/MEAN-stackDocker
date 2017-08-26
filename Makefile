@@ -29,6 +29,7 @@ wait:
 redeploy:
 	eval $(docker-machine env swarm-1) && \
 	docker stack rm meany
+	sleep 20
 	docker stack deploy -c stack/docker-compose-mean-demo.yml meany && \
 	make wait
 
