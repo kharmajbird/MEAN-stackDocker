@@ -7,7 +7,6 @@ services:
     ports:
       - 51415:51415
     networks:
-      - proxy
       - elk
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock
@@ -21,7 +20,5 @@ services:
     command: 'syslog://logstash:51415'
 
 networks:
-  proxy:
-    external: true
   elk:
     external: true
