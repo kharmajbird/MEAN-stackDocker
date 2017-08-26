@@ -21,6 +21,7 @@ wait:
 	./02-wait-for-service.sh kibana 1 1
 	./02-wait-for-service.sh logstash 1 1
 	./02-wait-for-service.sh logspout 3 3
+	sleep 5
 	open http://$(LEADER_IP):5601
 	./02-wait-for-service.sh meany_main 3 3
 	./02-wait-for-service.sh meany_db 1 1
