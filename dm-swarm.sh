@@ -26,7 +26,7 @@ docker-machine ssh swarm-2 docker swarm join --token ${TOKEN} ${IP}
 docker-machine ssh swarm-3 docker swarm join --token ${TOKEN} ${IP}
 
 # reset TOKEN for worker nodes
-TOKEN=$(docker swarm join-token)
+##TOKEN=$(docker swarm join-token)
 
 for i in ${WORKERS}; do
     eval $(docker-machine env swarm-$i)
