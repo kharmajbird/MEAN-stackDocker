@@ -7,13 +7,21 @@ services:
     ports:
       - 51415:51415
     networks:
+      - proxy
       - elk
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock
     environment:
       - SYSLOG_FORMAT=rfc3164
+    deploy:
+      mode: global
+      restart_policy:
+        condition: on-failure
+        delay: 30s
     command: 'syslog://logstash:51415'
 
 networks:
+  proxy:
+    external: true
   elk:
     external: true

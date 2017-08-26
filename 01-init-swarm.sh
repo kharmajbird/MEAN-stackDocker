@@ -28,7 +28,7 @@ docker-machine ssh swarm-1 \
     docker stack deploy -c docker-compose-elk.yml elk
 
 docker-machine ssh swarm-1 \
-    docker stack deploy -c docker-compose-mean-demo.yml meany
+    docker stack deploy -c docker-compose-logspout.yml logspout
 
 docker-machine ssh swarm-1 \
-    docker stack deploy -c docker-compose-logspout.yml logspout
+    docker stack deploy -c docker-compose-mean-demo.yml meany
