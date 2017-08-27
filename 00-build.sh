@@ -1,8 +1,8 @@
 #!/bin/sh
 
-(cd docker/meany && docker build -t kharmajbird/meany .) && \
-(cd docker/logstash && docker build -t kharmajbird/logstash .) && \
+(cd docker/meany && docker build -t kharmajbird/meany:latest .) && \
+(cd docker/logstash && docker build -t kharmajbird/logstash:latest .) && \
 \
 echo docker login && \
-docker push kharmajbird/meany && \
-docker push kharmajbird/logstash
+docker push kharmajbird/meany:latest && \
+docker push kharmajbird/logstash:latest
