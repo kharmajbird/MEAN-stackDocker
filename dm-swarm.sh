@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 
 NODES="1 2 3 4 5 6 7"
-LEADERS="1 2 3"
+MANAGERS="2 3"
 WORKERS="4 5 6 7"
 
 if [[ "$(uname -s )" == "Linux" ]]; then
@@ -19,26 +19,29 @@ eval $(docker-machine env swarm-1)
 docker swarm init \
   --advertise-addr $(docker-machine ip swarm-1)
 
-TOKEN=$(docker swarm join-token -q manager)
-IP=$(docker-machine ip swarm-1):2377
+TOKEN_MANAGER=$(docker swarm join-token -q manager)
+TOKEN_WORKER=$(docker swarm join-token -q worker)
 
-docker-machine ssh swarm-2 docker swarm join --token ${TOKEN} ${IP}
-docker-machine ssh swarm-3 docker swarm join --token ${TOKEN} ${IP}
+for i in ${MANAGERS}; do
+    eval $(docker-machine env swarm-$i)
 
-# reset TOKEN for worker nodes
-##TOKEN=$(docker swarm join-token)
+    docker swarm join \
+        --token $TOKEN_MANAGER \
+        --advertise-addr $(docker-machine ip swarm-$i) \
+        $(docker-machine ip swarm-1):2377
+done
 
 for i in ${WORKERS}; do
     eval $(docker-machine env swarm-$i)
 
     docker swarm join \
-        --token $TOKEN \
+        --token $TOKEN_WORKER \
         --advertise-addr $(docker-machine ip swarm-$i) \
         $(docker-machine ip swarm-1):2377
 done
 
 for i in ${NODES}; do
-    eval $(docker-machine env swarm-$i)
+    eval $(docker-machine env swarm-1)
 
     docker node update \
         --label-add env=prod \
