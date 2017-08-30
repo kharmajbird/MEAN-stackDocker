@@ -8,6 +8,12 @@ services:
       - 9200:9200
     networks:
       - elk
+    deploy:
+      replicas: 2
+      placement:
+        constraints: [node.labels.logger == true]
+    volumes:
+      - elasticsearch_db:/usr/share/elasticsearch/data
 
   logstash:
     image: kharmajbird/logstash
@@ -18,16 +24,10 @@ services:
       - elk
     environment:
       - LOGSPOUT=ignore
-##    deploy:
-##      replicas: 3
-##      update_config:
-##        parallelism: 1
-##        delay: 10s
-##      labels:
-##        - com.df.notify=true
-##        - com.df.distribute=true
-##        - com.df.servicePath=/
-##        - com.df.port=5000
+    deploy:
+      replicas: 2
+      placement:
+        constraints: [node.labels.logger == true]
 
   kibana:
     image: kibana:4.6
@@ -38,6 +38,10 @@ services:
       - elk
     environment:
       - ELASTICSEARCH_URL=http://elasticsearch:9200
+    deploy:
+      replicas: 2
+      placement:
+        constraints: [node.labels.logger == true]
     labels:
      - "com.df.notify=true"
      - "com.df.distribute=true"
@@ -49,3 +53,6 @@ networks:
     external: true
   elk:
     external: true
+
+volumes:
+  elasticsearch_db:

@@ -7,6 +7,8 @@ docker-machine ssh swarm-1 \
 docker-machine ssh swarm-1 \
     docker network create --driver overlay elk
 
+docker node update --label-add logger=true swarm-6
+docker node update --label-add logger=true swarm-7
 
 docker-machine ssh swarm-1 \
     curl -o docker-compose-proxy.yml https://raw.githubusercontent.com/kharmajbird/MEAN-stackDocker/master/stack/docker-compose-proxy.yml
