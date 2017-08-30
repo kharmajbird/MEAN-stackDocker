@@ -9,7 +9,7 @@ services:
     networks:
       - elk
     deploy:
-      replicas: 2
+      replicas: 1
       placement:
         constraints: [node.labels.logger == true]
     volumes:
