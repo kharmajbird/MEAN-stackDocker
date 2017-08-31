@@ -71,4 +71,3 @@ test-nginx:
 
 	@open http://localhost/app/kibana
 	@open http://localhost
-
