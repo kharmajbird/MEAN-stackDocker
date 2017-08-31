@@ -6,12 +6,14 @@ all:
 	@echo "make build         # build custom logstash and MEAN containers"
 	@echo "make swarm         # tear down any existing swarm and wait on its recreation"
 	@echo "make redeploy      # spin up a fresh set of docker stacks"
+	@echo "make test"         # perform all tests"
 	@echo "make test-logstash # sends a 'Hello Planet' message to the elk network, picked up by kibana"
 	@echo "make test-nginx    # test if nginx is configured as an external load balancer for the swarm"
 	@echo
 	@echo "make everyone      # do the whole thang, Gary Oldman style"
 	@echo
 
+everyone: build swarm
 
 
 build:
@@ -74,7 +76,7 @@ test-nginx:
 	@echo
 	@echo "If nginx is configured with the provided docker/nginx.conf"
 	@echo "and it is running on the same host the swarm nodes are on,"
-	@echo "then the go-demo and kibana pages will open in your local browser."
+	@echo "then the MEAN stack, go-demo, and kibana pages will open in your local browser."
 	@echo
 	@sleep 10
 
@@ -91,4 +93,4 @@ test-logstash:
 	debian \
 	logger -n logstash -P 51415 Hello Planet
 
-	open "http://localhost/app/kibana#/discover?_g=(refreshInterval:(display:Off,pause:!f,value:0),time:(from:now%2Fd,mode:quick,to:now%2Fd))&_a=(columns:!(_source),index:'logstash-*',interval:auto,query:(query_string:(analyze_wildcard:!t,query:'*Hello*')),sort:!(_score,desc))"
+	@open "http://localhost/app/kibana#/discover?_g=(refreshInterval:(display:Off,pause:!f,value:0),time:(from:now%2Fd,mode:quick,to:now%2Fd))&_a=(columns:!(_source),index:'logstash-*',interval:auto,query:(query_string:(analyze_wildcard:!t,query:'*Hello*')),sort:!(_score,desc))"
