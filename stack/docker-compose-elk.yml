@@ -9,7 +9,7 @@ services:
     networks:
       - elk
     deploy:
-      replicas: 1
+      replicas: 2
       placement:
         constraints: [node.labels.logger == true]
     volumes:
@@ -25,7 +25,7 @@ services:
     environment:
       - LOGSPOUT=ignore
     deploy:
-      replicas: 1
+      replicas: 2
       placement:
         constraints: [node.labels.logger == true]
 
@@ -34,13 +34,12 @@ services:
     ports:
       - 5601:5601
     networks:
-      - default
       - proxy
       - elk
     environment:
       - ELASTICSEARCH_URL=http://elasticsearch:9200
     deploy:
-      replicas: 1
+      replicas: 2
       placement:
         constraints: [node.labels.logger == true]
     labels:
@@ -50,8 +49,6 @@ services:
      - "com.df.port=5601"
 
 networks:
-  default:
-    external: false
   proxy:
     external: true
   elk:
