@@ -23,7 +23,7 @@ swarm:  clean init-swarm wait
 
 init-swarm:
 	./01-init-swarm.sh && \
-	deploy
+	make deploy
 
 wait:
 	eval $(docker-machine env swarm-1) && \
