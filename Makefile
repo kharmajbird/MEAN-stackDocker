@@ -13,7 +13,7 @@ all:
 	@echo "make everyone      # do the whole thang, Gary Oldman style"
 	@echo
 
-everyone: build swarm
+everyone: build swarm test-nginx test-logstash
 
 
 build:
