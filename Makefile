@@ -1,7 +1,14 @@
 NODES="1 2 3 4 5 6 7"
 LEADER_IP=`docker-machine ip swarm-1`
 
-all: build swarm
+all:
+	@echo
+	@echo "make build       # build custom logstash and MEAN containers"
+	@echo "make swarm       # tear down any existing swarm and wait on its recreation"
+	@echo "make redeploy    # spin up a fresh set of docker stacks"
+	@echo "make test-nginx  # test if nginx is configured as an external load balancer for the swarm"
+	@echo "make everyone    # do the whole thang, Gary Oldman style"
+	@echo
 
 build:
 	./00-build.sh
@@ -9,8 +16,8 @@ build:
 swarm:  clean init-swarm wait
 
 init-swarm:
-	./01-init-swarm.sh
-
+	./01-init-swarm.sh && \
+	deploy
 
 wait:
 	eval $(docker-machine env swarm-1)
@@ -18,7 +25,7 @@ wait:
 	./02-wait-for-service.sh swarm-listener 1 1
 	./02-wait-for-service.sh proxy_proxy 2 2
 	./02-wait-for-service.sh logspout 7 7
-	./02-wait-for-service.sh elasticsearch 1 1
+	./02-wait-for-service.sh elasticsearch 2 2
 	./02-wait-for-service.sh kibana 2 2
 	./02-wait-for-service.sh logstash 2 2
 	sleep 5
@@ -27,17 +34,22 @@ wait:
 	./02-wait-for-service.sh meany_db 1 1
 	open http://$(LEADER_IP)
 
-redeploy:
+deploy:
 	eval $(docker-machine env swarm-1) && \
-	docker stack rm meany
-	sleep 20
+	docker stack deploy -c stack/docker-compose-proxy.yml proxy && \
 	docker stack deploy -c stack/docker-compose-mean-demo.yml meany && \
+	docker stack deploy -c stack/docker-compose-elk.yml elk && \
+	docker stack deploy -c stack/docker-compose-logspout.yml logspout && \
 	make wait
 
-redeploy-elk:
+redeploy:
+	eval $(docker-machine env swarm-1) && \
+	docker stack rm proxy
+	docker stack rm logspout
 	docker stack rm elk
-	docker stack deploy -c stack/docker-compose-elk.yml elk && \
-	make wait
+	docker stack rm meany
+	sleep 20
+	make deploy
 
 clean:
 	# FIXME:  for i in $(NODES); do docker-machine rm -f swarm-$${i}; done
@@ -48,3 +60,15 @@ clean:
 	docker-machine rm -f swarm-5
 	docker-machine rm -f swarm-6
 	docker-machine rm -f swarm-7
+
+test-nginx:
+	@echo
+	@echo "If nginx is configured with the provided docker/nginx.conf"
+	@echo "and it is running on the same host the swarm nodes are on,"
+	@echo "then the go-demo and kibana pages will open in your local browser."
+	@echo
+	@sleep 10
+
+	@open http://localhost/app/kibana
+	@open http://localhost
+
