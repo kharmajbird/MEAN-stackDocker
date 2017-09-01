@@ -40,6 +40,8 @@ wait:
 	./02-wait-for-service.sh meany_main 3 3
 	./02-wait-for-service.sh meany_db 1 1
 	open http://$(LEADER_IP)
+	./02-wait-for-service.sh viz 2 2
+	open http://$(LEADER_IP)/viz
 
 deploy:
 	eval $(docker-machine env swarm-1) && \
@@ -48,6 +50,7 @@ deploy:
 	docker stack deploy -c stack/docker-compose-mean-demo.yml meany && \
 	docker stack deploy -c stack/docker-compose-elk.yml elk && \
 	docker stack deploy -c stack/docker-compose-logspout.yml logspout && \
+	docker stack deploy -c stack/docker-compose-viz.yml viz && \
 	make wait
 
 redeploy:
@@ -57,6 +60,7 @@ redeploy:
 	docker stack rm meany
 	docker stack rm elk
 	docker stack rm logspout
+	docker stack rm viz
 	sleep 20
 	make deploy
 
@@ -83,6 +87,7 @@ test-nginx:
 
 	@open http://localhost/app/kibana
 	@open http://localhost
+	@open http://localhost/viz
 
 test-logstash:
 	docker service rm logger-test
