@@ -9,8 +9,8 @@ DESIRED=$3
 wait_for_me() {
 
     while true; do
-        REPLICAS=$(docker service ls | grep ${SERVICE} | awk '{print $3}')
-        REPLICAS_NEW=$(docker service ls | grep ${SERVICE} | awk '{print $4}')
+        REPLICAS=$(docker service ls | grep "${SERVICE} " | awk '{print $3}')
+        REPLICAS_NEW=$(docker service ls | grep "${SERVICE} " | awk '{print $4}')
         if [[ $REPLICAS == "${CURRENT}/${DESIRED}" || $REPLICAS_NEW == "${CURRENT}/${DESIRED}" ]]; then
             break
         else
