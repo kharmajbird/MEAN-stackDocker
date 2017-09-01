@@ -9,11 +9,43 @@ services:
     networks:
       - elk
     deploy:
-      replicas: 2
       placement:
         constraints: [node.labels.logger == true]
+      resources:
+        limits:
+          memory: 1g
+    environment:
+      - cluster.name=docker-cluster
+      - bootstrap.memory_lock=true
+      - "ES_JAVA_OPTS=-Xms512m -Xmx512m"
+    ulimits:
+      memlock:
+        soft: -1
+        hard: -1
     volumes:
-      - elasticsearch_db:/usr/share/elasticsearch/data
+      - elasticsearch_db1:/usr/share/elasticsearch/data
+
+  elasticsearch2:
+    image: elasticsearch:2.4
+    networks:
+      - elk
+    deploy:
+      placement:
+        constraints: [node.labels.logger == true]
+      resources:
+        limits:
+          memory: 1g
+    environment:
+      - cluster.name=docker-cluster
+      - bootstrap.memory_lock=true
+      - "ES_JAVA_OPTS=-Xms512m -Xmx512m"
+      - "discovery.zen.ping.unicast.hosts=elasticsearch"
+    ulimits:
+      memlock:
+        soft: -1
+        hard: -1
+    volumes:
+      - elasticsearch_db2:/usr/share/elasticsearch/data
 
   logstash:
     image: kharmajbird/logstash
@@ -28,6 +60,8 @@ services:
       replicas: 2
       placement:
         constraints: [node.labels.logger == true]
+    depends_on:
+        - elasticsearch
 
   kibana:
     image: kibana:4.6
@@ -47,6 +81,8 @@ services:
      - "com.df.distribute=true"
      - "com.df.servicePath=/app/kibana,/bundles,/elasticsearch"
      - "com.df.port=5601"
+    depends_on:
+        - logstash
 
 networks:
   proxy:
@@ -55,4 +91,7 @@ networks:
     external: true
 
 volumes:
-  elasticsearch_db:
+  elasticsearch_db1:
+    driver: local
+  elasticsearch_db2:
+    driver: local
