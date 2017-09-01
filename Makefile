@@ -31,7 +31,8 @@ wait:
 	./02-wait-for-service.sh swarm-listener 1 1
 	./02-wait-for-service.sh proxy_proxy 2 2
 	./02-wait-for-service.sh logspout 7 7
-	./02-wait-for-service.sh elasticsearch 2 2
+	./02-wait-for-service.sh elasticsearch 1 1
+	./02-wait-for-service.sh elasticsearch2 1 1
 	./02-wait-for-service.sh kibana 2 2
 	./02-wait-for-service.sh logstash 2 2
 	sleep 5
@@ -53,9 +54,9 @@ redeploy:
 	eval $(docker-machine env swarm-1) && \
 	\
 	docker stack rm proxy
-	docker stack rm logspout
-	docker stack rm elk
 	docker stack rm meany
+	docker stack rm elk
+	docker stack rm logspout
 	sleep 20
 	make deploy
 
