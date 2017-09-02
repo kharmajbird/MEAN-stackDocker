@@ -41,7 +41,9 @@ wait:
 	./02-wait-for-service.sh meany_db 1 1
 	open http://$(LEADER_IP)
 	./02-wait-for-service.sh viz 2 2
-	open http://$(LEADER_IP)/viz
+
+	@echo "localhost:8088 will only be accessible if nginx is configured on the host"
+	open http://localhost:/8088
 
 deploy:
 	eval $(docker-machine env swarm-1) && \

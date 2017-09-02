@@ -4,8 +4,8 @@ services:
 
   viz:
     image: dockersamples/visualizer
-##    ports:
-##      - 8080:8080
+    ports:
+      - 8088:8088
     networks:
       - default
       - proxy
@@ -16,10 +16,12 @@ services:
     labels:
       - "com.df.notify=true"
       - "com.df.distribute=true"
-      - "com.df.servicePath=/viz"
-      - "com.df.port=8080"
+#      - "com.df.servicePath=/"
+#      - "com.df.reqPathSearch=/viz/app"
+#      - "com.df.reqPathReplace=/*"
+      - "com.df.port=8088"
     environment:
-      - CTX_ROOT=viz
+      - CTX_ROOT=/
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock
 
