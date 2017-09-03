@@ -2,6 +2,7 @@
 
 STACKS="proxy elk meany logspout viz"
 
+
 ## start Docker registry mirror
 ##mkdir -p rdata
 ##
