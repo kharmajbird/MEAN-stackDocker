@@ -37,7 +37,7 @@ wait:
 	./02-wait-for-service.sh logstash 2 2
 	./02-wait-for-service.sh meany_main 3 3
 	./02-wait-for-service.sh meany_db 1 1
-	./02-wait-for-service.sh viz 1 1
+	./02-wait-for-service.sh viz 2 2
 
 deploy:
 	eval $(docker-machine env swarm-1) && \
