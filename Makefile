@@ -55,6 +55,7 @@ deploy:
 redeploy:
 	eval $(docker-machine env swarm-1) && \
 	\
+	docker stack rm viz
 	docker stack rm proxy
 	docker stack rm meany
 	docker stack rm elk
