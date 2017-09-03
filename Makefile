@@ -1,11 +1,14 @@
+
 NODES="1 2 3 4 5 6 7"
 LEADER_IP=`docker-machine ip swarm-1`
 
 all:
 	@echo
+	@echo "To interact with this swarm from a fresh terminal, run 'eval $(docker-machine env swarm-1)'"
+	@echo
 	@echo "make build         # build custom logstash and MEAN containers"
 	@echo "make swarm         # tear down any existing swarm and wait on its recreation"
-	@echo "make redeploy      # spin up a fresh set of docker stacks"
+	@echo "make deploy        # spin up/update a set of docker stacks"
 	@echo "make test"         # perform all tests"
 	@echo "make test-logstash # sends a 'Hello Planet' message to the elk network, picked up by kibana"
 	@echo "make test-nginx    # test if nginx is configured as an external load balancer for the swarm"
@@ -19,49 +22,29 @@ everyone: build swarm deploy test
 build:
 	./00-build.sh
 
-swarm:  clean init-swarm
-
-init-swarm:
+swarm:  clean
 	./01-init-swarm.sh && \
 	make deploy
 
-wait:
-	eval $(docker-machine env swarm-1) && \
-	\
-	./02-wait-for-service.sh viz 2 2
-	./02-wait-for-service.sh swarm-listener 1 1
-	./02-wait-for-service.sh proxy_proxy 2 2
-	./02-wait-for-service.sh logspout 7 7
-	./02-wait-for-service.sh elasticsearch 1 1
-	./02-wait-for-service.sh elasticsearch2 1 1
-	./02-wait-for-service.sh kibana 2 2
-	./02-wait-for-service.sh logstash 2 2
-	./02-wait-for-service.sh meany_main 3 3
-	./02-wait-for-service.sh meany_db 1 1
-
 deploy:
-	eval $(docker-machine env swarm-1) && \
-	\
-	docker stack deploy -c stack/docker-compose-viz.yml viz && \
-	docker stack deploy -c stack/docker-compose-proxy.yml proxy && \
-	docker stack deploy -c stack/docker-compose-mean-demo.yml meany && \
-	docker stack deploy -c stack/docker-compose-elk.yml elk && \
-	docker stack deploy -c stack/docker-compose-logspout.yml logspout && \
+	./02-deploy-stacks.sh && \
 	make wait
+
 	sleep 10
 	open http://$(LEADER_IP)
 	open http://$(LEADER_IP):5601
 
-redeploy:
-	eval $(docker-machine env swarm-1) && \
-	\
-	docker stack rm viz
-	docker stack rm proxy
-	docker stack rm meany
-	docker stack rm elk
-	docker stack rm logspout
-	sleep 10
-	make deploy
+wait:
+	./03-wait-for-service.sh viz 2 2
+	./03-wait-for-service.sh swarm-listener 1 1
+	./03-wait-for-service.sh proxy_proxy 2 2
+	./03-wait-for-service.sh logspout 7 7
+	./03-wait-for-service.sh elasticsearch 1 1
+	./03-wait-for-service.sh elasticsearch2 1 1
+	./03-wait-for-service.sh kibana 2 2
+	./03-wait-for-service.sh logstash 2 2
+	./03-wait-for-service.sh meany_main 3 3
+	./03-wait-for-service.sh meany_db 1 1
 
 clean:
 	# FIXME:  for i in $(NODES); do docker-machine rm -f swarm-$${i}; done
