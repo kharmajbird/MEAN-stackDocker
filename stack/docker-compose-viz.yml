@@ -5,7 +5,7 @@ services:
   viz:
     image: dockersamples/visualizer
     ports:
-      - 8088:8088
+      - 8080:8080
     networks:
       - default
       - proxy
@@ -19,7 +19,7 @@ services:
 #      - "com.df.servicePath=/"
 #      - "com.df.reqPathSearch=/viz/app"
 #      - "com.df.reqPathReplace=/*"
-      - "com.df.port=8088"
+      - "com.df.port=8080"
     environment:
       - CTX_ROOT=/
     volumes:

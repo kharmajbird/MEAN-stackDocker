@@ -37,6 +37,7 @@ wait:
 	./02-wait-for-service.sh logstash 2 2
 	./02-wait-for-service.sh meany_main 3 3
 	./02-wait-for-service.sh meany_db 1 1
+	./02-wait-for-service.sh viz 1 1
 
 deploy:
 	eval $(docker-machine env swarm-1) && \
@@ -45,6 +46,7 @@ deploy:
 	docker stack deploy -c stack/docker-compose-mean-demo.yml meany && \
 	docker stack deploy -c stack/docker-compose-elk.yml elk && \
 	docker stack deploy -c stack/docker-compose-logspout.yml logspout && \
+	docker stack deploy -c stack/docker-compose-viz.yml viz && \
 	make wait
 	sleep 10
 	open http://$(LEADER_IP)
@@ -97,20 +99,9 @@ test-logstash:
 	@open "http://localhost/app/kibana#/discover?_g=(refreshInterval:(display:Off,pause:!f,value:0),time:(from:now%2Fd,mode:quick,to:now%2Fd))&_a=(columns:!(_source),index:'logstash-*',interval:auto,query:(query_string:(analyze_wildcard:!t,query:'*Hello*')),sort:!(_score,desc))"
 
 test-viz:
-	DOCKER_TLS_VERIFY=""
-	DOCKER_HOST=""
-	DOCKER_CERT_PATH=""
-	DOCKER_MACHINE_NAME=""
-
-	@echo "localhost:8088 will only be accessible if nginx is configured on the host"
+	@echo
+	@echo "localhost:8080 will only be accessible if nginx is configured on the host"
 	@echo "and viz is running as a service outside of the swarm cluster"
 	@echo
 
-	docker service create \
-		--name=viz \
-		--publish=8088:8088/tcp \
-		--mount=type=bind,src=/var/run/docker.sock,dst=/var/run/docker.sock \
-	dockersamples/visualizer
-
-	./02-wait-for-service.sh viz 1 1
-	@open http://localhost:8088
+	@open http://localhost:8080
