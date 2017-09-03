@@ -13,13 +13,13 @@ all:
 	@echo "make everyone      # do the whole thang, Gary Oldman style"
 	@echo
 
-everyone: build swarm test
+everyone: build swarm deploy test
 
 
 build:
 	./00-build.sh
 
-swarm:  clean init-swarm wait
+swarm:  clean init-swarm
 
 init-swarm:
 	./01-init-swarm.sh && \
@@ -28,6 +28,7 @@ init-swarm:
 wait:
 	eval $(docker-machine env swarm-1) && \
 	\
+	./02-wait-for-service.sh viz 2 2
 	./02-wait-for-service.sh swarm-listener 1 1
 	./02-wait-for-service.sh proxy_proxy 2 2
 	./02-wait-for-service.sh logspout 7 7
@@ -37,16 +38,15 @@ wait:
 	./02-wait-for-service.sh logstash 2 2
 	./02-wait-for-service.sh meany_main 3 3
 	./02-wait-for-service.sh meany_db 1 1
-	./02-wait-for-service.sh viz 2 2
 
 deploy:
 	eval $(docker-machine env swarm-1) && \
 	\
+	docker stack deploy -c stack/docker-compose-viz.yml viz && \
 	docker stack deploy -c stack/docker-compose-proxy.yml proxy && \
 	docker stack deploy -c stack/docker-compose-mean-demo.yml meany && \
 	docker stack deploy -c stack/docker-compose-elk.yml elk && \
 	docker stack deploy -c stack/docker-compose-logspout.yml logspout && \
-	docker stack deploy -c stack/docker-compose-viz.yml viz && \
 	make wait
 	sleep 10
 	open http://$(LEADER_IP)
