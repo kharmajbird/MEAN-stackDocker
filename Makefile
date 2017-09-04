@@ -12,6 +12,7 @@ all:
 	@echo "make test"         # perform all tests"
 	@echo "make test-logstash # sends a 'Hello Planet' message to the elk network, picked up by kibana"
 	@echo "make test-nginx    # test if nginx is configured as an external load balancer for the swarm"
+	@echo "make test-viz      # if nginx is the ELB, proxy the visualizer interface to a manager via http://localhost:8080"
 	@echo
 	@echo "make everyone      # do the whole thang, Gary Oldman style"
 	@echo
