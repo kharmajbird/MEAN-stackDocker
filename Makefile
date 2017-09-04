@@ -17,7 +17,7 @@ all:
 
 everyone: build swarm deploy
 	@echo
-	@echo "To interact with this swarm from a fresh terminal, run 'eval $(docker-machine env swarm-1)'"
+	@echo "To interact with this swarm from a fresh terminal, run 'eval \$$(docker-machine env swarm-1)'"
 	@echo
 
 
@@ -79,7 +79,9 @@ test-nginx:
 	@open http://localhost
 
 test-logstash:
-	docker service rm logger-test
+	if [ `docker service ls| grep logger-test` ]; then \
+		docker service rm logger-test; \
+	fi
 
 	docker service create \
 	--name logger-test \
