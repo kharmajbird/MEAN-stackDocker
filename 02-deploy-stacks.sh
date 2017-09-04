@@ -12,12 +12,18 @@ STACKS="proxy elk meany viz"
 ##  registry:2.5
 
 
-for i in ${STACKS}; do
-    docker-machine ssh swarm-1 \
-        curl -o docker-compose-$i.yml https://raw.githubusercontent.com/kharmajbird/MEAN-stackDocker/master/stack/docker-compose-$i.yml
-done
 
-for i in ${STACKS}; do
-    docker-machine ssh swarm-1 \
-        docker stack deploy -c docker-compose-$i.yml $i
-done
+if [ "$1" = "killall" ]; then
+    for i in ${STACKS}; do
+        docker stack rm $i
+    done
+else
+    for i in ${STACKS}; do
+        docker-machine ssh swarm-1 \
+        curl -o docker-compose-$i.yml \
+            https://raw.githubusercontent.com/kharmajbird/MEAN-stackDocker/master/stack/docker-compose-$i.yml
+
+        docker-machine ssh swarm-1 \
+            docker stack deploy -c docker-compose-$i.yml $i
+    done
+fi

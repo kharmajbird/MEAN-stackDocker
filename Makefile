@@ -39,6 +39,10 @@ deploy:
 	# Kibana interface
 	open http://$(LEADER_IP):5601
 
+redeploy:
+	./02-deploy-stacks.sh killall && \
+	make deploy
+
 wait:
 	./03-wait-for-service.sh swarm-listener 1 1
 	./03-wait-for-service.sh proxy_proxy 2 2
