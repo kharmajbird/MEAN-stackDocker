@@ -79,10 +79,6 @@ test-nginx:
 	@open http://localhost
 
 test-logstash:
-	if [ `docker service ls| grep logger-test` ]; then \
-		docker service rm logger-test; \
-	fi
-
 	docker service create \
 	--name logger-test \
 	--network elk \
@@ -92,6 +88,8 @@ test-logstash:
 
 	# query for "Hello" that was logged above
 	@open "http://localhost/app/kibana#/discover?_g=(refreshInterval:(display:Off,pause:!f,value:0),time:(from:now%2Fd,mode:quick,to:now%2Fd))&_a=(columns:!(_source),index:'logstash-*',interval:auto,query:(query_string:(analyze_wildcard:!t,query:'*Hello*')),sort:!(_score,desc))"
+
+	docker service rm logger-test
 
 test-viz:
 	@echo
