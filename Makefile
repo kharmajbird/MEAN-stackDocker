@@ -23,8 +23,7 @@ build:
 	./00-build.sh
 
 swarm:  clean
-	./01-init-swarm.sh && \
-	make deploy
+	./01-init-swarm.sh
 
 deploy:
 	./02-deploy-stacks.sh && \
@@ -35,9 +34,9 @@ deploy:
 	open http://$(LEADER_IP):5601
 
 wait:
-	./03-wait-for-service.sh viz 2 2
 	./03-wait-for-service.sh swarm-listener 1 1
 	./03-wait-for-service.sh proxy_proxy 2 2
+	./03-wait-for-service.sh viz 2 2
 	./03-wait-for-service.sh logspout 7 7
 	./03-wait-for-service.sh elasticsearch 1 1
 	./03-wait-for-service.sh elasticsearch2 1 1
