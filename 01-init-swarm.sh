@@ -3,8 +3,8 @@
 ./dm-swarm.sh
 
 
-# create overlay network
-#s
+# create overlay networks
+#
 docker-machine ssh swarm-1 \
     docker network create --driver overlay proxy
 docker-machine ssh swarm-1 \

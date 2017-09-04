@@ -4,8 +4,6 @@ LEADER_IP=`docker-machine ip swarm-1`
 
 all:
 	@echo
-	@echo "To interact with this swarm from a fresh terminal, run 'eval $(docker-machine env swarm-1)'"
-	@echo
 	@echo "make build         # build custom logstash and MEAN containers"
 	@echo "make swarm         # tear down any existing swarm and wait on its recreation"
 	@echo "make deploy        # spin up/update a set of docker stacks"
@@ -17,7 +15,10 @@ all:
 	@echo "make everyone      # do the whole thang, Gary Oldman style"
 	@echo
 
-everyone: build swarm deploy test
+everyone: build swarm deploy
+	@echo
+	@echo "To interact with this swarm from a fresh terminal, run 'eval $(docker-machine env swarm-1)'"
+	@echo
 
 
 build:
@@ -31,7 +32,11 @@ deploy:
 	make wait
 
 	sleep 10
+
+	# Angular app
 	open http://$(LEADER_IP)
+
+	# Kibana interface
 	open http://$(LEADER_IP):5601
 
 wait:
@@ -67,7 +72,10 @@ test-nginx:
 	@echo
 	@sleep 3
 
+	# Kibana via ELB
 	@open http://localhost/app/kibana
+
+	# Angular app via ELB
 	@open http://localhost
 
 test-logstash:
@@ -80,6 +88,7 @@ test-logstash:
 	debian \
 	logger -n logstash -P 51415 Hello Planet
 
+	# query for "Hello" that was logged above
 	@open "http://localhost/app/kibana#/discover?_g=(refreshInterval:(display:Off,pause:!f,value:0),time:(from:now%2Fd,mode:quick,to:now%2Fd))&_a=(columns:!(_source),index:'logstash-*',interval:auto,query:(query_string:(analyze_wildcard:!t,query:'*Hello*')),sort:!(_score,desc))"
 
 test-viz:
@@ -88,4 +97,5 @@ test-viz:
 	@echo "and viz is running as a service outside of the swarm cluster"
 	@echo
 
+	# Swarm visualizer
 	@open http://localhost:8080
