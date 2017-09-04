@@ -62,6 +62,27 @@ services:
         constraints: [node.labels.logger == true]
     depends_on:
         - elasticsearch
+        - elasticsearch2
+
+  logspout:
+    image: gliderlabs/logspout
+    ports:
+      - 51415:51415
+    networks:
+      - proxy
+      - elk
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+    environment:
+      - SYSLOG_FORMAT=rfc3164
+    deploy:
+      mode: global
+      restart_policy:
+        condition: on-failure
+        delay: 30s
+    depends_on:
+      - logstash
+    command: 'syslog://logstash:51415'
 
   kibana:
     image: kibana:4.6
@@ -83,6 +104,9 @@ services:
      - "com.df.port=5601"
     depends_on:
         - logstash
+        - elasticsearch
+        - elasticsearch2
+        - logspout
 
 networks:
   proxy:

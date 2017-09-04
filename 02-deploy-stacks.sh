@@ -1,6 +1,6 @@
 #!/bin/sh
 
-STACKS="proxy elk meany logspout viz"
+STACKS="proxy elk meany viz"
 
 
 ## start Docker registry mirror
