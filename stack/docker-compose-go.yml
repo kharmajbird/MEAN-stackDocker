@@ -6,10 +6,8 @@ services:
     image: kharmajbird/go-demo${TAG}
     environment:
       - DB=db
-#      - DB=go-demo_db
     networks:
       - proxy
-#      - go-demo
       - default
     deploy:
       replicas: 3
@@ -28,7 +26,6 @@ services:
     image: mongo
     networks:
       - proxy
-#      - go-demo
       - default
 
 networks:
@@ -36,5 +33,3 @@ networks:
     external: false
   proxy:
     external: true
-#  go-demo:
-#    external: true

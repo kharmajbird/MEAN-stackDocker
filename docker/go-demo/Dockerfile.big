@@ -6,8 +6,7 @@ RUN go test --cover -v ./...
 RUN go build -v -o go-demo
 
 EXPOSE 8080
-ENV DB go-demo_db
-##ENV DB db
+ENV DB db
 CMD ["go-demo"]
 HEALTHCHECK --interval=10s CMD wget -qO- localhost:8080/demo/hello
 
