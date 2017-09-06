@@ -3,7 +3,7 @@ version: '3'
 services:
 
   main:
-    image: kharmajbird/meany${TAG}
+    image: vfarcic/go-demo${TAG}
     environment:
       - DB=db
     networks:
@@ -17,10 +17,8 @@ services:
       labels:
         - com.df.notify=true
         - com.df.distribute=true
-        - com.df.servicePath=/
+        - com.df.servicePath=/demo
         - com.df.port=8080
-      placement:
-        constraints: [node.labels.nonlogger == true]
 
   db:
     image: mongo
