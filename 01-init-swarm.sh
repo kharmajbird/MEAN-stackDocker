@@ -9,8 +9,8 @@ docker-machine ssh swarm-1 \
     docker network create --driver overlay proxy
 docker-machine ssh swarm-1 \
     docker network create --driver overlay elk
-docker-machine ssh swarm-1 \
-    docker network create --driver overlay go-demo
+##docker-machine ssh swarm-1 \
+##    docker network create --driver overlay go-demo
 
 
 # label logger and nonlogger nodes
