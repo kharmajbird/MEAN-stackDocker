@@ -1,6 +1,6 @@
 #!/bin/sh
 
-STACKS="proxy elk go meany viz"
+STACKS="proxy elk go-demo meany viz"
 
 
 ## start Docker registry mirror
