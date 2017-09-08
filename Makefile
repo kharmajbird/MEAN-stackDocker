@@ -53,10 +53,10 @@ wait:
 	./03-wait-for-service.sh elasticsearch2 1 1
 	./03-wait-for-service.sh kibana 2 2
 	./03-wait-for-service.sh logstash 2 2
-	./03-wait-for-service.sh meany_main 3 3
 	./03-wait-for-service.sh meany_db 1 1
-	./03-wait-for-service.sh go-demo_main 3 3
+	./03-wait-for-service.sh meany_main 3 3
 	./03-wait-for-service.sh go-demo_db 1 1
+	./03-wait-for-service.sh go-demo_main 3 3
 
 clean:
 	# FIXME:  for i in $(NODES); do docker-machine rm -f swarm-$${i}; done
