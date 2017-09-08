@@ -91,13 +91,15 @@ test-nginx:
 test-logstash:
 	docker service create \
 	--name logger-test \
-	--network elk \
 	--restart-condition none \
+	--network proxy \
 	debian \
 	logger -n logstash -P 51415 Hello Planet
 
-	# query for "Hello" that was logged above
-	@open "http://localhost/app/kibana#/discover?_g=(refreshInterval:(display:Off,pause:!f,value:0),time:(from:now%2Fd,mode:quick,to:now%2Fd))&_a=(columns:!(_source),index:'logstash-*',interval:auto,query:(query_string:(analyze_wildcard:!t,query:'*Hello*')),sort:!(_score,desc))"
+	sleep 5
+
+	# query for "Planet" that was logged above
+	@open "http://localhost/app/kibana#/discover?_g=(refreshInterval:(display:Off,pause:!f,value:0),time:(from:now%2Fd,mode:quick,to:now%2Fd))&_a=(columns:!(_source),index:'logstash-*',interval:auto,query:(query_string:(analyze_wildcard:!t,query:'*Planet*')),sort:!(_score,desc))"
 
 	sleep 15
 	docker service rm logger-test
