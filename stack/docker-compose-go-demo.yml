@@ -5,7 +5,7 @@ services:
   main:
     image: kharmajbird/go-demo${TAG}
     environment:
-      - DB=db
+      - DB="go-demo-db-rs1,go-demo-db-rs2,go-demo-db-rs3"
     networks:
       - proxy
       - default
@@ -22,13 +22,44 @@ services:
       placement:
         constraints: [node.labels.nonlogger == true]
 
-  db:
-    image: mongo
+  go-demo-db-rs1:
+    image: kharmajbird/mongo${TAG}
+# should network be go-demo??
     networks:
       - default
+    command: 'mongodb --replSet rs0'
+
+  go-demo-db-rs2:
+    image: kharmajbird/mongo${TAG}
+    networks:
+      - default
+    command: 'mongodb --replSet rs0'
+
+  go-demo-db-rs3:
+    image: kharmajbird/mongo${TAG}
+    networks:
+      - default
+    command: 'mongodb --replSet rs0'
+
+  go-demo-db-init:
+    image: kharmajbird/mongo${TAG}
+    environment:
+      - SETS="go-demo-db-rs1 go-demo-db-rs2 go-demo-db-rs3"
+    deploy:
+      restart_policy:
+        condition: none
+    networks:
+      - default
+    command: 'mongodb --replSet rs0'
 
 networks:
   default:
     external: false
   proxy:
     external: true
+
+
+#  db:
+#    image: mongo
+#    networks:
+#      - default
