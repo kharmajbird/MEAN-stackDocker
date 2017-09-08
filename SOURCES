@@ -1,0 +1,14 @@
+#
+# these project directories are essentially customied clones wrapped into a single project
+#
+# The DevOps Toolkit 2.1
+#
+
+origin	https://github.com/vfarcic/books-ms/ (fetch)
+origin	https://github.com/vfarcic/cloud-provisioning (fetch)
+origin	https://github.com/vfarcic/docker-flow-proxy (fetch)
+origin	https://github.com/vfarcic/go-demo (fetch)
+
+https://github.com/vfarcic/docker-flow/blob/master
+https://github.com/vfarcic/ms-lifecycle/blob/master
+https://github.com/vfarcic/ms-books/blob/master
