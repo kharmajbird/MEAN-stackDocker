@@ -1,6 +1,8 @@
 #!/bin/sh
 
 STACKS="proxy go-demo elk meany viz"
+#BRANCH=master
+BRANCH=mongo-replicaset
 
 
 ## start Docker registry mirror
@@ -21,7 +23,7 @@ else
     for i in ${STACKS}; do
         docker-machine ssh swarm-1 \
         curl -o docker-compose-$i.yml \
-            https://raw.githubusercontent.com/kharmajbird/MEAN-stackDocker/master/stack/docker-compose-$i.yml
+            https://raw.githubusercontent.com/kharmajbird/MEAN-stackDocker/$BRANCH/stack/docker-compose-$i.yml
 
         docker-machine ssh swarm-1 \
             docker stack deploy -c docker-compose-$i.yml $i
