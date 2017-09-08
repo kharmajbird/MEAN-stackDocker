@@ -5,7 +5,8 @@ services:
   main:
     image: kharmajbird/go-demo${TAG}
     environment:
-      - DB="go-demo-db-rs1,go-demo-db-rs2,go-demo-db-rs3"
+#      - DB="go-demo-db-rs1,go-demo-db-rs2,go-demo-db-rs3"
+      - DB="go-demo-db-rs1"
     networks:
       - proxy
       - default
@@ -26,7 +27,6 @@ services:
     image: kharmajbird/mongo${TAG}
 # should network be go-demo??
     networks:
-      - proxy
       - default
     command: 'mongodb --replSet rs0'
 
@@ -39,7 +39,6 @@ services:
   go-demo-db-rs3:
     image: kharmajbird/mongo${TAG}
     networks:
-      - proxy
       - default
     command: 'mongodb --replSet rs0'
 
@@ -49,7 +48,6 @@ services:
 #      - SETS="go-demo-db-rs1 go-demo-db-rs2 go-demo-db-rs3"
       - SETS="go-demo-db-rs1"
     networks:
-      - proxy
       - default
     command: 'mongodb --replSet rs0'
 
