@@ -31,7 +31,8 @@ deploy:
 	./02-deploy-stacks.sh && \
 	make wait
 
-	sleep 10
+	@echo "Waiting for Elasticsearch to catch up...."
+	sleep 20
 
 	# Angular app
 	open http://$(LEADER_IP)

@@ -25,7 +25,6 @@ services:
   db:
     image: mongo
     networks:
-      - proxy
       - default
 
 networks:

@@ -7,7 +7,8 @@ services:
     ports:
       - 9200:9200
     networks:
-      - elk
+      - proxy
+      - default
     deploy:
       placement:
         constraints: [node.labels.logger == true]
@@ -28,7 +29,8 @@ services:
   elasticsearch2:
     image: elasticsearch:2.4
     networks:
-      - elk
+      - proxy
+      - default
     deploy:
       placement:
         constraints: [node.labels.logger == true]
@@ -53,16 +55,13 @@ services:
       - 5000:5000
     networks:
       - proxy
-      - elk
+      - default
     environment:
       - LOGSPOUT=ignore
     deploy:
       replicas: 2
       placement:
         constraints: [node.labels.logger == true]
-    depends_on:
-        - elasticsearch
-        - elasticsearch2
 
   logspout:
     image: gliderlabs/logspout
@@ -70,7 +69,7 @@ services:
       - 51415:51415
     networks:
       - proxy
-      - elk
+      - default
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock
     environment:
@@ -80,8 +79,6 @@ services:
       restart_policy:
         condition: on-failure
         delay: 30s
-    depends_on:
-      - logstash
     command: 'syslog://logstash:51415'
 
   kibana:
@@ -90,7 +87,7 @@ services:
       - 5601:5601
     networks:
       - proxy
-      - elk
+      - default
     environment:
       - ELASTICSEARCH_URL=http://elasticsearch:9200
     deploy:
@@ -102,16 +99,11 @@ services:
      - "com.df.distribute=true"
      - "com.df.servicePath=/app/kibana,/bundles,/elasticsearch"
      - "com.df.port=5601"
-    depends_on:
-        - logstash
-        - elasticsearch
-        - elasticsearch2
-        - logspout
 
 networks:
+  default:
+    external: false
   proxy:
-    external: true
-  elk:
     external: true
 
 volumes:
