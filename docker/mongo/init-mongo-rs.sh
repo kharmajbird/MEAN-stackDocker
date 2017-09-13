@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 
-#for rs in "$@"; do
-for rs in "$SETS"; do
+for rs in "$@"; do
+#for rs in "$SETS"; do
     mongo --host $rs --eval 'db'
     while [ $? -ne 0 ]; do
         echo "Waiting for $rs to become available"
@@ -11,7 +11,8 @@ for rs in "$SETS"; do
 done
 
 i=0
-for rs in "$SETS"; do
+for rs in "$@"; do
+#for rs in "$SETS"; do
     if [ "$rs" != "$1" ]; then
         MEMBERS="$MEMBERS ,"
     fi
