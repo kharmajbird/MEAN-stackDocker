@@ -58,7 +58,6 @@ wait:
 	./03-wait-for-service.sh go-demo_go-demo-db-rs1 1 1
 	./03-wait-for-service.sh go-demo_go-demo-db-rs2 1 1
 	./03-wait-for-service.sh go-demo_go-demo-db-rs3 1 1
-	./03-wait-for-service.sh go-demo_go-demo-db-init 1 1
 	./03-wait-for-service.sh go-demo_main 3 3
 
 clean:
