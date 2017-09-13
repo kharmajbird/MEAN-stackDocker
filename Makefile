@@ -103,7 +103,7 @@ test-logstash:
 	# query for "Planet" that was logged above
 	@open "http://localhost/app/kibana#/discover?_g=(refreshInterval:(display:Off,pause:!f,value:0),time:(from:now%2Fd,mode:quick,to:now%2Fd))&_a=(columns:!(_source),index:'logstash-*',interval:auto,query:(query_string:(analyze_wildcard:!t,query:'*Planet*')),sort:!(_score,desc))"
 
-	sleep 15
+	sleep 30
 	docker service rm logger-test
 
 test-viz:
