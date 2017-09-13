@@ -6,7 +6,6 @@ services:
     image: kharmajbird/go-demo${TAG}
     environment:
       - DB="go-demo-db-rs1,go-demo-db-rs2,go-demo-db-rs3"
-#      - DB="go-demo-db-rs1"
     networks:
       - proxy
       - default
