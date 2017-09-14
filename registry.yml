@@ -3,9 +3,16 @@ version: "3"
 services:
 
   registry:
-    image: registry
+    image: registry:2.5
+    environment:
+      - REGISTRY_PROXY_REMOTEURL="https://registry-1.docker.io registry:2.5"
     ports:
       - 5000:5000
+    deploy:
+      restart_policy:
+        condition: on-failure
+    volumes:
+      - ./rdata:/var/lib/registry
 
 networks:
   proxy:
