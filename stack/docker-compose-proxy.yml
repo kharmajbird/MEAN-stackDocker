@@ -13,7 +13,7 @@ services:
       - LISTENER_ADDRESS=swarm-listener
       - MODE=swarm
     deploy:
-      replicas: 2
+      replicas: 5
 
   swarm-listener:
     image: vfarcic/docker-flow-swarm-listener
