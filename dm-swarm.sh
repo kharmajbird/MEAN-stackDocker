@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 
-NODES="1 2 3 4 5 6 7"
+NODES=7
 MANAGERS="2 3"
 WORKERS="4 5 6 7"
 
@@ -8,7 +8,7 @@ if [[ "$(uname -s )" == "Linux" ]]; then
   export VIRTUALBOX_SHARE_FOLDER="$PWD:$PWD"
 fi
 
-for i in ${NODES}; do
+for i in $seq( "${NODES}" ); do
     docker-machine create \
         -d virtualbox \
         swarm-$i
