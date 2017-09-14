@@ -19,16 +19,16 @@ services:
         - com.df.distribute=true
         - com.df.servicePath=/demo
         - com.df.port=8080
-      placement:
-        constraints: [node.labels.nonlogger == true]
+##     placement:
+##        constraints: [node.labels.nonlogger == true]
 
   go-demo-db-rs1:
     image: mongo:3.2.10
     networks:
       - default
     deploy:
-      placement:
-        constraints: [node.labels.nonlogger == true]
+##      placement:
+##        constraints: [node.labels.nonlogger == true]
     command: 'mongod --replSet rs0'
 
   go-demo-db-rs2:
@@ -36,8 +36,8 @@ services:
     networks:
       - default
     deploy:
-      placement:
-        constraints: [node.labels.nonlogger == true]
+##      placement:
+##        constraints: [node.labels.nonlogger == true]
     command: 'mongod --replSet rs0'
 
   go-demo-db-rs3:
@@ -45,8 +45,8 @@ services:
     networks:
       - default
     deploy:
-      placement:
-        constraints: [node.labels.nonlogger == true]
+##      placement:
+##        constraints: [node.labels.nonlogger == true]
     command: 'mongod --replSet rs0'
 
   go-demo-db-init:
@@ -56,8 +56,8 @@ services:
     deploy:
       restart_policy:
         condition: none
-      placement:
-        constraints: [node.labels.nonlogger == true]
+##      placement:
+##        constraints: [node.labels.nonlogger == true]
     command: '/init-mongo-rs.sh go-demo-db-rs1 go-demo-db-rs2 go-demo-db-rs3'
 
 networks:

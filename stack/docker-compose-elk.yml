@@ -10,8 +10,8 @@ services:
       - proxy
       - default
     deploy:
-      placement:
-        constraints: [node.labels.logger == true]
+##      placement:
+##        constraints: [node.labels.logger == true]
       resources:
         limits:
           memory: 1g
@@ -32,8 +32,8 @@ services:
       - proxy
       - default
     deploy:
-      placement:
-        constraints: [node.labels.logger == true]
+##      placement:
+##        constraints: [node.labels.logger == true]
       resources:
         limits:
           memory: 1g
@@ -60,8 +60,8 @@ services:
       - LOGSPOUT=ignore
     deploy:
       replicas: 2
-      placement:
-        constraints: [node.labels.logger == true]
+##      placement:
+##        constraints: [node.labels.logger == true]
 
   logspout:
     image: gliderlabs/logspout
@@ -92,8 +92,8 @@ services:
       - ELASTICSEARCH_URL=http://elasticsearch:9200
     deploy:
       replicas: 2
-      placement:
-        constraints: [node.labels.logger == true]
+##      placement:
+##        constraints: [node.labels.logger == true]
     labels:
      - "com.df.notify=true"
      - "com.df.distribute=true"

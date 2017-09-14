@@ -19,8 +19,8 @@ services:
         - com.df.distribute=true
         - com.df.servicePath=/
         - com.df.port=8080
-      placement:
-        constraints: [node.labels.nonlogger == true]
+##      placement:
+##        constraints: [node.labels.nonlogger == true]
 
   db:
     image: mongo
