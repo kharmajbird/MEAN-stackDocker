@@ -7,7 +7,7 @@ services:
     environment:
       - REGISTRY_PROXY_REMOTEURL="https://registry-1.docker.io registry:2.5"
     ports:
-      - 5000:5000
+      - 4000:5000
     deploy:
       restart_policy:
         condition: on-failure
