@@ -12,10 +12,11 @@ docker push kharmajbird/go-demo:latest && \
 docker push kharmajbird/mongo:latest
 
 if [ ! `docker ps| grep registry > /dev/null 2>&1` ]; then
-  docker run -d --restart=always \
-    -p 4000:5000 \
+  docker run -d \
     --name v2_mirror \
-    -v $PWD/rdata:/var/lib/registry \
+    --restart=always \
     -e REGISTRY_PROXY_REMOTEURL=https://registry-1.docker.io \
+    -p 4000:5000 \
+    -v $PWD/rdata:/var/lib/registry \
   registry:2.5
 fi
