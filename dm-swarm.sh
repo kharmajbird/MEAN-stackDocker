@@ -40,7 +40,7 @@ for i in ${WORKERS}; do
         $(docker-machine ip swarm-1):2377
 done
 
-for i in ${NODES}; do
+for i in $(seq "${NODES}" ); do
     eval $(docker-machine env swarm-1)
 
     docker node update \
