@@ -8,7 +8,7 @@ if [[ "$(uname -s )" == "Linux" ]]; then
   export VIRTUALBOX_SHARE_FOLDER="$PWD:$PWD"
 fi
 
-for i in $seq( "${NODES}" ); do
+for i in $(seq "${NODES}"); do
     docker-machine create \
         -d virtualbox \
         swarm-$i
