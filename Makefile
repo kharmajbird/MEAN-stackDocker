@@ -46,7 +46,7 @@ redeploy:
 
 wait:
 	./03-wait-for-service.sh swarm-listener 1 1
-	./03-wait-for-service.sh proxy_proxy 2 2
+	./03-wait-for-service.sh proxy_proxy 5 5
 	./03-wait-for-service.sh viz 2 2
 	./03-wait-for-service.sh logspout 7 7
 	./03-wait-for-service.sh elasticsearch 1 1
