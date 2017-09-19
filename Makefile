@@ -100,7 +100,8 @@ test-logstash:
 
 	sleep 5
 
-	# query for "Planet" that was logged above
+	# query for "Planet" that was logged above (you may need to refresh Kibana....)
+	#
 	@open "http://localhost/app/kibana#/discover?_g=(refreshInterval:(display:Off,pause:!f,value:0),time:(from:now%2Fd,mode:quick,to:now%2Fd))&_a=(columns:!(_source),index:'logstash-*',interval:auto,query:(query_string:(analyze_wildcard:!t,query:'*Planet*')),sort:!(_score,desc))"
 
 	sleep 30
