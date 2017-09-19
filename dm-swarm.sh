@@ -41,14 +41,18 @@ for i in ${WORKERS}; do
         $(docker-machine ip swarm-1):2377
 done
 
-for i in $(seq "${NODES}" ); do
+for i in $(seq "${NODES}"); do
     eval $(docker-machine env swarm-1)
 
     docker node update \
         --label-add env=prod \
         swarm-$i
+done
 
-    docker rm --force $(docker ps -q --filter "name=registry-${i}")
+for i in $(seq "${NODES}"); do
+    eval $(docker-machine env swarm-$i)
+
+    docker rm --force $(docker ps -q --filter "name=registry-${i}") >/dev/null 2>&1
     docker run -d --privileged --name registry-${i} --hostname=registry-${i} \
         -p ${i}2375:2375 \
         -p ${i}5000:5000 \

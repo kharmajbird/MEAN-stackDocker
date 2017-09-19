@@ -11,7 +11,7 @@ docker push kharmajbird/logstash:latest && \
 docker push kharmajbird/go-demo:latest && \
 docker push kharmajbird/mongo:latest
 
-if [ ! `docker ps| grep registry > /dev/null 2>&1` ]; then
+if [ `docker ps| grep v2_mirror > /dev/null 2>&1` ]; then
   docker run -d \
     --name v2_mirror \
     --restart=always \
