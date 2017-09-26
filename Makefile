@@ -59,6 +59,7 @@ wait:
 	./03-wait-for-service.sh go-demo_go-demo-db-rs2 1 1
 	./03-wait-for-service.sh go-demo_go-demo-db-rs3 1 1
 	./03-wait-for-service.sh go-demo_main 3 3
+	./03-wait-for-service.sh python-demo_main 3 3
 
 clean:
 	# FIXME:  for i in $(NODES); do docker-machine rm -f swarm-$${i}; done
@@ -71,7 +72,7 @@ clean:
 	docker-machine rm -f swarm-7
 
 
-test: test-nginx test-logstash test-viz
+test: test-nginx test-logstash test-viz test-python
 
 test-nginx:
 	@echo
@@ -115,3 +116,6 @@ test-viz:
 
 	# Swarm visualizer
 	@open http://localhost:8080
+
+test-python:
+	@open http://localhost:8000

@@ -1,9 +1,14 @@
 #!/bin/sh
 
-STACKS="proxy go-demo elk meany viz"
+#
+# all of these stacks should be in an environment variable in the Makefile
+#
+STACKS="proxy go-demo elk meany viz python-demo"
+
 BRANCH=master
 #BRANCH=mongo-replicaset
 #BRANCH=registry
+BRANCH=python
 
 
 ## start Docker registry mirror
