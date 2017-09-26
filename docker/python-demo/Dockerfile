@@ -1,16 +1,18 @@
 FROM python:2-onbuild
 MAINTAINER kharmajbird@gmail.com
 
-COPY start.sh /start.sh
 RUN mkdir -p /Django/project
 COPY requirements.txt /Django/project
 
-CWD /Django/project
+WORKDIR /Django/project
 RUN pip install -r requirements.txt && \
     django-admin startproject helloworld
 
+COPY start.sh /Django/project/helloworld/start.sh
 COPY views.py /Django/project/helloworld/helloworld/views.py
 COPY urls.py /Django/project/helloworld/helloworld/urls.py
 
 EXPOSE 8000
-CMD ["/start.sh"]
+
+WORKDIR /Django/project/helloworld
+CMD /Django/project/helloworld/start.sh
