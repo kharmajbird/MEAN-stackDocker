@@ -8,7 +8,7 @@ STACKS="proxy go-demo elk meany viz python-demo"
 BRANCH=master
 #BRANCH=mongo-replicaset
 #BRANCH=registry
-BRANCH=python
+#BRANCH=python
 
 
 ## start Docker registry mirror
