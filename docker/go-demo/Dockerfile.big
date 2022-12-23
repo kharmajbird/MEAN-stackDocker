@@ -1,7 +1,12 @@
-FROM golang:1.7 AS build
+FROM golang:alpine AS build
 ADD . /src
 WORKDIR /src
-RUN go get -d -v -t
+#RUN go get -d -v -t
+
+RUN go env -w GO111MODULE=off
+##RUN go mod init
+RUN go install
+
 RUN go test --cover -v ./...
 RUN go build -v -o go-demo
 

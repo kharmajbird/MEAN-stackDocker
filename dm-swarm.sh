@@ -1,8 +1,12 @@
 #!/usr/bin/env bash
 
-NODES=7
+##NODES=7
+##MANAGERS="2 3"
+##WORKERS="4 5 6 7"
+
+NODES=5
 MANAGERS="2 3"
-WORKERS="4 5 6 7"
+WORKERS="4 5"
 
 if [[ "$(uname -s )" == "Linux" ]]; then
   export VIRTUALBOX_SHARE_FOLDER="$PWD:$PWD"

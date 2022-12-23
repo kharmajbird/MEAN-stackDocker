@@ -19,11 +19,13 @@ docker-machine ssh swarm-1 \
     docker node update --label-add nonlogger=true swarm-2
 docker-machine ssh swarm-1 \
     docker node update --label-add nonlogger=true swarm-3
+
+##docker-machine ssh swarm-1 \
+##    docker node update --label-add nonlogger=true swarm-4
+##docker-machine ssh swarm-1 \
+##    docker node update --label-add nonlogger=true swarm-5
+
 docker-machine ssh swarm-1 \
-    docker node update --label-add nonlogger=true swarm-4
+    docker node update --label-add logger=true swarm-4
 docker-machine ssh swarm-1 \
-    docker node update --label-add nonlogger=true swarm-5
-docker-machine ssh swarm-1 \
-    docker node update --label-add logger=true swarm-6
-docker-machine ssh swarm-1 \
-    docker node update --label-add logger=true swarm-7
+    docker node update --label-add logger=true swarm-5
